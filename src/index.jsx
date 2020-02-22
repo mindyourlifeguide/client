@@ -4,14 +4,21 @@ import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-
 import { ErrorBoundry } from './components/Error/ErrorBoundry';
-import { DataStoreService } from './services/dataStoreService';
+import { ServerDataService } from './services/serverDataService';
+// import { TestDataService } from './services/testDataService';
 import { DataStoreServiceProvider } from './utils/dataStoreServiceContext';
 import { store } from './store';
 import { App } from './App';
 
-const dataStoreService = new DataStoreService();
+// const TEST = new TestDataService();
+const SERVER = new ServerDataService();
+
+// choose data SERVER or TEST
+let data = SERVER;
+
+// data context
+let dataStoreService = data;
 
 ReactDOM.render(
 	<Provider store={store}>

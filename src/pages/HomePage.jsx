@@ -1,7 +1,7 @@
 import React from 'react';
 import './HomePage.scss';
 import { Films } from '../containers/FilmsContainers';
-import { Upload } from '../components/Upload';
+import { UploadFile } from '../components/UploadFile';
 import { Add } from '../components/Add';
 import { Title } from '../components/Title';
 import { Sort } from '../components/Sort';
@@ -14,7 +14,7 @@ export const HomePage = () => {
 			<Title />
 			<div className="button">
 				<div className="upload">
-					<Upload />
+					<UploadFile />
 				</div>
 				<div className="add">
 					<Add />

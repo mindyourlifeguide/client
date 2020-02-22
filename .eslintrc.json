@@ -1,0 +1,33 @@
+{
+	"parser": "babel-eslint",
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"extends": ["airbnb", "prettier/react", "plugin:prettier/recommended"],
+	"plugins": ["react","prettier"],
+	"rules": {
+//		"prettier/prettier": ["Error"],
+		"import/prefer-default-export": "off",
+		"import / no-anonymous-default-export" : [ "error" ,  {
+			"allowArray" : true ,
+			"allowArrowFunction" : true ,
+			"allowAnonymousClass" : true ,
+			"allowAnonymousFunction" : true ,
+			"allowCallExpression" : true ,  // Истинное значение здесь для обратной совместимости
+			"allowLiteral" : true ,
+			"allowObject" : true
+		}],
+		"max-len": ["error", 120],
+		"jsx-a11y/href-no-hash": [0],
+		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+		"no-console": "off",
+		"no-restricted-syntax": [
+			"error",
+			{
+				"selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(log|warn|error|info|trace)$/]",
+				"message": "Unexpected property on console object was called"
+			}
+		]
+	}
+}

@@ -1,4 +1,4 @@
-export class DataStoreService {
+export class TestDataService {
 	_films = [
 		{
 			stars: [

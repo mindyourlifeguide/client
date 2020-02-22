@@ -1,0 +1,39 @@
+$blue: #2979ff;
+$grey: #1a1a1d;
+$lightGrey: #d3d3d3;
+
+
+.upload{
+    display: flex;;
+    flex-direction: row;
+    align-items: center;;
+    justify-content: center;
+}
+
+.fileInput {
+//   border-radius: 5px;
+//   border: 2px solid $lightGrey;
+//   padding: 15px 20px;
+//   margin-bottom: 10px;
+  width: 150px;
+  height: 20px;
+//   &:focus {
+//     border: 2px solid $blue;
+//   }
+}
+
+.sendButton {
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: $blue;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  border: 2px solid $lightGrey;
+  height: fit-content;
+  width: auto;
+  &:hover {
+    background-color: darken($blue, 20%);
+  }
+}
