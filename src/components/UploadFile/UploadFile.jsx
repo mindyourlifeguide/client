@@ -1,25 +1,55 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import DescriptionIcon from '@material-ui/icons/Description';
+import { yellow, blue, pink } from '@material-ui/core/colors';
 import './UploadFile.scss';
 
-const UploadFile = () => {
+const UploadFile = ({ getFilms }) => {
 	const films = [];
-	const [fileName, setFileName] = useState('');
 	const [data, setData] = useState([]);
 	const [titles, setTitles] = useState([]);
 	const [releaseYears, setReleaseYears] = useState([]);
 	const [formats, setFormats] = useState([]);
 	const [stars, setStars] = useState([]);
 
-	const uploadFile = e => {
-		const reader = new FileReader();
-		setFileName(reader.fileName);
-		reader.onload = handleFileLoad;
-		reader.readAsText(e.target.files[0]);
+	const postFilms = i => {
+		const compareArray = (i, film) => {
+			return (
+				stars[i]
+					.split(', ')
+					.filter((star, index) => {
+						return index === stars[i].split(', ').indexOf(star);
+					})
+					.sort()
+					.join(', ') !== film.stars.sort().join(', ')
+			);
+		};
+		if (
+			films.filter(
+				film =>
+					film.title !== titles[i] ||
+					Number(film.release_year) !== Number(releaseYears[i]) ||
+					film.format !== formats[i] ||
+					compareArray(i, film),
+			).length === films.length
+		) {
+			axios
+				.post(`http://localhost:5000/api/films`, {
+					title: titles[i],
+					release_year: Number(releaseYears[i]),
+					format: formats[i],
+					stars: stars[i].split(', ').filter((star, index) => {
+						return index === stars[i].split(', ').indexOf(star);
+					}),
+				})
+				.then(response => window.location.reload());
+		}
 	};
 
-	const handleFileLoad = event => {
-		setData(event.target.result.split('\n'));
+	const handleFileLoad = e => {
+		setData(e.target.result.split('\n'));
 	};
 
 	const sortingBetweenArray = () => {
@@ -52,62 +82,48 @@ const UploadFile = () => {
 		}
 	};
 
-	const compareArray = (i, film) => {
-		return (
-			stars[i]
-				.split(', ')
-				.filter((star, index) => {
-					return index === stars[i].split(', ').indexOf(star);
-				})
-				.sort()
-				.join(', ') !== film.stars.sort().join(', ')
-		);
-	};
-	const postFilms = i => {
-		if (
-			films.filter(
-				film =>
-					film.title !== titles[i] ||
-					Number(film.release_year) !== Number(releaseYears[i]) ||
-					film.format !== formats[i] ||
-					compareArray(i, film),
-			).length === films.length
-		) {
-			axios.post(`http://localhost:5000/api/films`, {
-				title: titles[i],
-				release_year: Number(releaseYears[i]),
-				format: formats[i],
-				stars: stars[i].split(', ').filter((star, index) => {
-					return index === stars[i].split(', ').indexOf(star);
-				}),
-			});
-		}
+	const uploadFile = e => {
+		const reader = new FileReader();
+		reader.onload = handleFileLoad;
+		reader.readAsText(e.target.files[0]);
 	};
 
 	return (
-		<div>
-			<div className="upload">
-				<input
-					id="fileInput"
-					type="file"
-					name="file"
-					className="chooseFile"
-					onChange={e => {
-						uploadFile(e);
-					}}
-				/>
-				<p>{fileName}</p>
-				<button
-					className="sendButton"
-					onClick={() => {
-						sortingBetweenArray();
-					}}
-				>
-					send
-				</button>
-			</div>
+		<div className="upload">
+			<input
+				id="file"
+				type="file"
+				name="file"
+				className="inputfile"
+				onChange={e => {
+					uploadFile(e);
+				}}
+			/>
+
+			<Button
+				className="chooseFile"
+				style={{
+					color: yellow[50],
+					background: pink[300],
+					marginRight: 10,
+				}}
+				startIcon={<DescriptionIcon />}
+			>
+				<label htmlFor="file">Choose a file</label>
+			</Button>
+			<Button
+				variant="contained"
+				style={{ color: yellow[50], background: blue[900] }}
+				startIcon={<CloudUploadIcon />}
+				onClick={() => {
+					sortingBetweenArray();
+				}}
+			>
+				Upload
+			</Button>
 		</div>
 	);
 };
 
 export { UploadFile };
+// setTimeout(() => resolve(window.location.reload(), 3000)

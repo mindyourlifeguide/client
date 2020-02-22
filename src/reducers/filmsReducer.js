@@ -8,18 +8,20 @@ export const filmsReducer = (state, action) => {
 	if (state === undefined) {
 		return {
 			films: [],
+			term: '',
 			loading: true,
 			error: null,
 		};
 	}
 	switch (action.type) {
 		case FETCH_FILMS_REQUESTED:
-			return { films: [], loading: true, error: null };
+			return { films: [], term: '', loading: true, error: null };
 		case FETCH_FILMS_SUCCESS:
-			return { films: action.payload, loading: false };
+			return { films: action.payload, term: '', loading: false };
 		case FETCH_FILMS_FAILURE:
 			return {
 				films: [],
+				term: '',
 				loading: false,
 				error: action.payload,
 			};

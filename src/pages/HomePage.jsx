@@ -6,7 +6,7 @@ import { Add } from '../components/Add';
 import { Title } from '../components/Title';
 import { Sort } from '../components/Sort';
 import { SearchActor } from '../components/SearchActor';
-import { SearchFilm } from '../components/SearchFilm';
+import { Search } from '../components/SearchFilm';
 
 export const HomePage = () => {
 	return (
@@ -21,8 +21,7 @@ export const HomePage = () => {
 				</div>
 			</div>
 			<div className="control">
-				<Sort /> <SearchFilm />
-				<SearchActor />
+				<Sort /> <Search />
 			</div>
 			<Films />
 		</div>

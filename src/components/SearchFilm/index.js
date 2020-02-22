@@ -1,3 +1,3 @@
-import { SearchFilm } from './SearchFilm';
+import { Search } from './Search';
 
-export { SearchFilm };
+export { Search };
