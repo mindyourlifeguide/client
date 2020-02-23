@@ -17,13 +17,10 @@ const SERVER = new ServerDataService();
 // choose data SERVER or TEST
 let data = SERVER;
 
-// data context
-let dataStoreService = data;
-
 ReactDOM.render(
 	<Provider store={store}>
 		<ErrorBoundry>
-			<DataStoreServiceProvider value={dataStoreService}>
+			<DataStoreServiceProvider value={data}>
 				<Router>
 					<App />
 				</Router>

@@ -1,45 +1,44 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
-import './Search.scss';
+import './SearchList.scss';
 
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+const SearchList = () => {
+	const [selectedValue, setSelectedValue] = React.useState('Film');
+	const [search, setSearch] = React.useState('');
 
-const Search = ({ films, term }) => {
-	const [selectedValue, setSelectedValue] = React.useState('b');
 	const handleChange = event => {
-		setSelectedValue(event.target.value);
+		setSelectedValue(console.log(event.target.value));
 	};
 
-	const dataSearch = e => {};
 	return (
 		<div className="search">
 			<TextField
-				value={term}
+				value={search}
 				id="outlined-search"
 				label="Search film"
 				type="search"
 				variant="outlined"
 				size="small"
-				onChange={dataSearch}
+				onChange={e => setSearch(console.log(e.target.value))}
 			/>
 			<div>
 				<Radio
-					checked={selectedValue === 'b'}
+					checked={selectedValue === 'Film'}
 					onChange={handleChange}
-					value="b"
+					value="Film"
 					color="primary"
 					name="radio-button-demo"
-					inputProps={{ 'aria-label': 'B' }}
+					inputProps={{ 'aria-label': 'Film' }}
 				/>
 				<label>Film</label>
 				<Radio
-					checked={selectedValue === 'd'}
+					checked={selectedValue === 'Actor'}
 					onChange={handleChange}
-					value="d"
+					value="Actor"
 					color="secondary"
 					name="radio-button-demo"
-					inputProps={{ 'aria-label': 'D' }}
+					inputProps={{ 'aria-label': 'Actor' }}
 				/>
 				<label>Actor</label>
 			</div>
@@ -47,4 +46,4 @@ const Search = ({ films, term }) => {
 	);
 };
 
-export { Search };
+export { SearchList };

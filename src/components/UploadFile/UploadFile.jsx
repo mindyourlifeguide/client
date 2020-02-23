@@ -6,7 +6,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import { yellow, blue, pink } from '@material-ui/core/colors';
 import './UploadFile.scss';
 
-const UploadFile = ({ getFilms }) => {
+const UploadFile = () => {
 	const films = [];
 	const [data, setData] = useState([]);
 	const [titles, setTitles] = useState([]);
@@ -52,7 +52,7 @@ const UploadFile = ({ getFilms }) => {
 		setData(e.target.result.split('\n'));
 	};
 
-	const sortingBetweenArray = () => {
+	const sortingArray = () => {
 		for (let i = 0; i < data.length; i++) {
 			if (data[i].includes('Title: ')) {
 				setTitles(
@@ -87,7 +87,9 @@ const UploadFile = ({ getFilms }) => {
 		reader.onload = handleFileLoad;
 		reader.readAsText(e.target.files[0]);
 	};
-
+	const onButtonClick = () => {
+		document.getElementById('file').click();
+	};
 	return (
 		<div className="upload">
 			<input
@@ -100,23 +102,30 @@ const UploadFile = ({ getFilms }) => {
 				}}
 			/>
 
-			<Button
-				className="chooseFile"
-				style={{
-					color: yellow[50],
-					background: pink[300],
-					marginRight: 10,
-				}}
-				startIcon={<DescriptionIcon />}
-			>
-				<label htmlFor="file">Choose a file</label>
-			</Button>
+			<label htmlFor="file">
+				<Button
+					htmlFor="file"
+					className="chooseFile"
+					style={{
+						color: yellow[50],
+						background: pink[300],
+						marginRight: 10,
+					}}
+					startIcon={<DescriptionIcon />}
+					onClick={() => {
+						onButtonClick();
+					}}
+				>
+					Choose a file
+				</Button>
+			</label>
+
 			<Button
 				variant="contained"
 				style={{ color: yellow[50], background: blue[900] }}
 				startIcon={<CloudUploadIcon />}
 				onClick={() => {
-					sortingBetweenArray();
+					sortingArray();
 				}}
 			>
 				Upload

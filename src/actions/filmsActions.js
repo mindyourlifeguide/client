@@ -28,6 +28,6 @@ export const fetchFilms = dataStoreService => () => dispatch => {
 	dispatch(fetchFilmsRequested());
 	dataStoreService
 		.getFilms()
-		.then(contacts => dispatch(fetchFilmsSuccess(contacts)))
+		.then(films => dispatch(fetchFilmsSuccess(films)))
 		.catch(err => dispatch(fetchFilmsFailure(err)));
 };

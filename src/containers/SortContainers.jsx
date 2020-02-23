@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Spinner } from '../components/Spinner';
 import { ErrorIndicator } from '../components/Error/ErrorIndicator';
 import { withDataStoreService } from '../components/hoc';
-import { FilmsList } from '../components/Films/FilmsList';
 import { fetchFilms } from '../actions/filmsActions';
+import { SortList } from '../components/SortList';
 
-class FilmsContainers extends PureComponent {
+class SortContainers extends PureComponent {
 	componentDidMount() {
 		this.props.fetchFilms();
 	}
@@ -21,7 +21,7 @@ class FilmsContainers extends PureComponent {
 		if (error) {
 			return <ErrorIndicator />;
 		}
-		return <FilmsList films={films} term={term} />;
+		return <SortList films={films} term={term} />;
 	}
 }
 
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch, { dataStoreService }) => {
 	);
 };
 
-export const Films = compose(
+export const Sort = compose(
 	withDataStoreService(),
 	connect(mapStateToProps, mapDispatchToProps),
-)(FilmsContainers);
+)(SortContainers);

@@ -1,4 +1,4 @@
-[
+const films = [
 	{
 		stars: [
 			'Mel Brooks',
@@ -297,3 +297,35 @@
 		__v: 0,
 	},
 ];
+const term = 'w';
+
+const visibleItems = films
+	.map(items => {
+		return items.title;
+	})
+	.filter(item => {
+		return item.toLowerCase().indexOf(term) > -1;
+	});
+
+visibleItems;
+console.log(visibleItems);
+
+//
+// const sorting = films => {
+// 	const sorted = films.sort(function(a, b) {
+// 		if (
+// 			a.title.substr(0, 1).toLowerCase() > b.title.substr(0, 1).toLowerCase()
+// 		) {
+// 			return term === 1 ? 1 : -1;
+// 		}
+// 		if (
+// 			a.title.substr(0, 1).toLowerCase() < b.title.substr(0, 1).toLowerCase()
+// 		) {
+// 			return term === 1 ? -1 : 1;
+// 		}
+// 		return 0;
+// 	});
+// 	return sorted;
+// };
+//
+// console.log(sorting(films));

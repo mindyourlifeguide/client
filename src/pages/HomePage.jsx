@@ -4,9 +4,8 @@ import { Films } from '../containers/FilmsContainers';
 import { UploadFile } from '../components/UploadFile';
 import { Add } from '../components/Add';
 import { Title } from '../components/Title';
-import { Sort } from '../components/Sort';
-import { SearchActor } from '../components/SearchActor';
-import { Search } from '../components/SearchFilm';
+import { Search } from '../containers/SearchContainers';
+import { Sort } from '../containers/SortContainers';
 
 export const HomePage = () => {
 	return (

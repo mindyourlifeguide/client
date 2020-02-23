@@ -10,7 +10,7 @@ import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 
 import { green, deepOrange, deepPurple } from '@material-ui/core/colors';
 
-export const FilmsListItem = ({ title, year, format, stars }) => {
+const FilmsListItem = ({ title, year, format, stars }) => {
 	const [expanded, setExpanded] = React.useState([]);
 
 	const handleChange = (event, nodes) => {
@@ -56,3 +56,5 @@ export const FilmsListItem = ({ title, year, format, stars }) => {
 		</div>
 	);
 };
+
+export { FilmsListItem };

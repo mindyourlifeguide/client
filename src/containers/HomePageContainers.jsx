@@ -7,7 +7,7 @@ import { withDataStoreService } from '../components/hoc';
 import { FilmsList } from '../components/Films/FilmsList';
 import { fetchFilms } from '../actions/filmsActions';
 
-class FilmsContainers extends PureComponent {
+class HomePageContainers extends PureComponent {
 	componentDidMount() {
 		this.props.fetchFilms();
 	}
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch, { dataStoreService }) => {
 	);
 };
 
-export const Films = compose(
+export const HomePage = compose(
 	withDataStoreService(),
 	connect(mapStateToProps, mapDispatchToProps),
-)(FilmsContainers);
+)(HomePageContainers);
