@@ -2,7 +2,10 @@ import {
 	FETCH_FILMS_FAILURE,
 	FETCH_FILMS_REQUESTED,
 	FETCH_FILMS_SUCCESS,
-} from '../constants';
+	SET_RADIO_SEARCH_ACTOR,
+	SET_RADIO_SEARCH_FILM,
+	SET_SORT_FILMS_ALPHABET,
+} from './constants';
 
 const fetchFilmsRequested = () => {
 	return {
@@ -30,4 +33,11 @@ export const fetchFilms = dataStoreService => () => dispatch => {
 		.getFilms()
 		.then(films => dispatch(fetchFilmsSuccess(films)))
 		.catch(err => dispatch(fetchFilmsFailure(err)));
+};
+
+export const sortFilmsAlphabet = filmsSort => {
+	return {
+		type: FETCH_FILMS_SUCCESS,
+		payload: filmsSort,
+	};
 };

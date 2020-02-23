@@ -2,9 +2,10 @@ import {
 	FETCH_FILMS_FAILURE,
 	FETCH_FILMS_SUCCESS,
 	FETCH_FILMS_REQUESTED,
-} from '../constants';
+	SET_SORT_FILMS_ALPHABET,
+} from './constants';
 
-export const filmsReducer = (state, action) => {
+export const reducer = (state, action) => {
 	if (state === undefined) {
 		return {
 			films: [],
@@ -23,7 +24,10 @@ export const filmsReducer = (state, action) => {
 				loading: false,
 				error: action.payload,
 			};
+		case SET_SORT_FILMS_ALPHABET:
+			return { films: action.payload, loading: false };
+
 		default:
-			return state.filmsState;
+			return state;
 	}
 };

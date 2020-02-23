@@ -19,13 +19,13 @@ let data = SERVER;
 
 ReactDOM.render(
 	<Provider store={store}>
-		<ErrorBoundry>
-			<DataStoreServiceProvider value={data}>
+		<DataStoreServiceProvider value={data}>
+			<ErrorBoundry>
 				<Router>
 					<App />
 				</Router>
-			</DataStoreServiceProvider>
-		</ErrorBoundry>
+			</ErrorBoundry>
+		</DataStoreServiceProvider>
 	</Provider>,
 	document.getElementById('root'),
 );

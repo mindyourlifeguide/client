@@ -4,9 +4,9 @@ import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import DescriptionIcon from '@material-ui/icons/Description';
 import { yellow, blue, pink } from '@material-ui/core/colors';
-import './UploadFile.scss';
+import './Upload.scss';
 
-const UploadFile = () => {
+const Upload = () => {
 	const films = [];
 	const [data, setData] = useState([]);
 	const [titles, setTitles] = useState([]);
@@ -134,5 +134,5 @@ const UploadFile = () => {
 	);
 };
 
-export { UploadFile };
+export { Upload };
 // setTimeout(() => resolve(window.location.reload(), 3000)

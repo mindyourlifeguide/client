@@ -1,9 +1,9 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
-import './SearchList.scss';
+import './Search.scss';
 
-const SearchList = () => {
+const Search = () => {
 	const [selectedValue, setSelectedValue] = React.useState('Film');
 	const [search, setSearch] = React.useState('');
 
@@ -46,4 +46,4 @@ const SearchList = () => {
 	);
 };
 
-export { SearchList };
+export { Search };
