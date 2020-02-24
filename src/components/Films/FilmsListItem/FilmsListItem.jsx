@@ -1,34 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FilmsListItem.scss';
-import { IconButton } from '@material-ui/core';
+
 import { TreeView, TreeItem } from '@material-ui/lab';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import TheatersIcon from '@material-ui/icons/Theaters';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
-
 import { green, deepOrange, deepPurple } from '@material-ui/core/colors';
 
-const FilmsListItem = ({ title, year, format, stars }) => {
-	const [expanded, setExpanded] = React.useState([]);
+const FilmsListItem = ({ title, year, format, stars, id }) => {
+	const [expanded, setExpanded] = useState([]);
 
 	const handleChange = (event, nodes) => {
 		setExpanded(nodes);
 	};
 
-	const actor = stars.join(', ');
+	const star = stars.join(', ');
 
 	return (
-		<div className="item">
-			<IconButton
-				className="delete"
-				color="secondary"
-				aria-label="delete"
-				component="span"
-			>
-				<DeleteOutlineIcon />
-			</IconButton>
+		<div className="item" id={id}>
 			<TreeView
 				defaultCollapseIcon={<ErrorOutlineIcon color="primary" />}
 				defaultExpandIcon={<ErrorOutlineIcon color="primary" />}
@@ -48,7 +38,7 @@ const FilmsListItem = ({ title, year, format, stars }) => {
 					/>
 					<TreeItem
 						nodeId="4"
-						label={actor}
+						label={star}
 						icon={<PeopleAltRoundedIcon style={{ color: deepPurple[500] }} />}
 					/>
 				</TreeItem>

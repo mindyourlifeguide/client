@@ -1,0 +1,28 @@
+.button {
+	display: flex;
+}
+.add {
+	margin-left: 10px;
+}
+.upload {
+	margin-left: 10px;
+}
+.control {
+	display: flex;
+	margin-top: 10px;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 480px) {
+	.button {
+		display: flex;
+		flex-direction: column;
+	}
+	.buttonUpload {
+		display: flex;
+		flex-direction: column;
+	}
+	.control {
+		display: flex;
+	}
+}

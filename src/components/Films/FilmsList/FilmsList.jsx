@@ -1,20 +1,72 @@
 import React from 'react';
 import './FilmList.scss';
 import { FilmsListItem } from '../FilmsListItem';
+import { IconButton } from '@material-ui/core';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import axios from 'axios';
 
-const FilmsList = ({ films }) => {
+const FilmsList = ({
+	films,
+	forceRerender,
+	setForceRerender,
+	searchLine,
+	radio,
+	_id,
+}) => {
+	const searching = (searchLine, radio) => {
+		if (radio === 'Film') {
+			return film => {
+				return (
+					film.title.toLowerCase().includes(searchLine.toLowerCase()) ||
+					!searchLine
+				);
+			};
+		} else {
+			return film => {
+				return film.stars.find(stars =>
+					stars.toLowerCase().includes(searchLine.toLowerCase()),
+				);
+			};
+		}
+	};
+
+	const handleDelete = id => {
+		films.splice(
+			films.findIndex(film => film._id === id),
+			1,
+		);
+		axios.delete(`http://localhost:5000/api/films/${id}`);
+		setForceRerender(!forceRerender);
+	};
+
 	return (
-		<div>
+		<div className="lists">
 			<ul>
-				{films.map(({ _id, stars, title, release_year, format }) => {
+				{films.filter(searching(searchLine, radio)).map(film => {
 					return (
-						<li key={_id}>
-							<FilmsListItem
-								title={title}
-								year={release_year}
-								format={format}
-								stars={stars}
-							/>
+						<li key={film._id}>
+							<div className="info">
+								<IconButton
+									style={{ padding: 0 }}
+									name="delete"
+									className="delete"
+									color="secondary"
+									aria-label="delete"
+									component="span"
+									onClick={() => handleDelete(film._id)}
+								>
+									<DeleteOutlineIcon />
+								</IconButton>
+
+								<FilmsListItem
+									className="info"
+									id={film._id}
+									title={film.title}
+									year={film.release_year}
+									format={film.format}
+									stars={film.stars}
+								/>
+							</div>
 						</li>
 					);
 				})}
@@ -24,45 +76,3 @@ const FilmsList = ({ films }) => {
 };
 
 export { FilmsList };
-
-// import React from 'react';
-// import './FilmList.scss';
-// import { FilmsListItem } from '../FilmsListItem';
-//
-// const FilmsList = ({ films, term, radio }) => {
-// 	const searching = (term, radio) => {
-// 		if (radio === 'Film') {
-// 			return x => {
-// 				return x.title.toLowerCase().includes(term.toLowerCase()) || !term;
-// 			};
-// 		} else {
-// 			return x => {
-// 				return x.stars.find(actor =>
-// 					actor.toLowerCase().includes(term.toLowerCase()),
-// 				);
-// 			};
-// 		}
-// 	};
-// 	return (
-// 		<div>
-// 			<ul>
-// 				{films
-// 					.filter(searching(term, radio))
-// 					.map(({ _id, stars, title, release_year, format }) => {
-// 						return (
-// 							<li key={_id}>
-// 								<FilmsListItem
-// 									title={title}
-// 									year={release_year}
-// 									format={format}
-// 									stars={stars}
-// 								/>
-// 							</li>
-// 						);
-// 					})}
-// 			</ul>
-// 		</div>
-// 	);
-// };
-//
-// export { FilmsList };

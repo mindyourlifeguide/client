@@ -1,5 +1,6 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import './AddFilm.scss';
+import axios from 'axios';
 import {
 	FormControl,
 	InputLabel,
@@ -17,25 +18,46 @@ import {
 import { yellow, green } from '@material-ui/core/colors';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-const Add = () => {
-	const [open, setOpen] = React.useState(false);
-	const [format, setFormat] = React.useState('dvd');
+const AddFilm = ({ setFilms }) => {
+	const [open, setOpen] = useState(false);
+	const [format, setFormat] = useState('DVD');
+	const [title, setTitle] = useState('');
+	const [release_year, setReleaseYear] = useState('');
+	const [enterStars, setEnterStars] = useState('');
 
+	// the modal window adding film
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
-
 	const handleClose = () => {
 		setOpen(false);
 	};
-
 	const handleFormatChange = event => {
 		setFormat(event.target.value);
+	};
+
+	// adding film to list
+	const handlAdd = () => {
+		axios
+			.post(`http://localhost:5000/api/films`, {
+				title: title,
+				release_year: release_year,
+				format: format,
+				actors: enterStars.split(', ').filter((star, index) => {
+					return index === enterStars.split(', ').indexOf(star);
+				}),
+			})
+			.then(handleClose)
+			.then(res => {
+				setFilms(res.data);
+			})
+			.then(window.location.reload());
 	};
 
 	return (
 		<div>
 			<Button
+				className="add"
 				variant="contained"
 				style={{ color: yellow[50], background: green[900] }}
 				startIcon={<AddCircleIcon />}
@@ -48,7 +70,7 @@ const Add = () => {
 				onClose={handleClose}
 				aria-labelledby="form-dialog-title"
 			>
-				<DialogTitle id="form-dialog-title">Add Film</DialogTitle>
+				<DialogTitle id="form-dialog-title">Add Films</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
 						To add film to this website, please enter info here.
@@ -57,23 +79,35 @@ const Add = () => {
 						autoFocus
 						margin="dense"
 						id="name"
-						label="Film"
+						label="Films"
 						type="text"
 						fullWidth
+						onChange={e => setTitle(e.target.value)}
 					/>
 					<TextField
 						margin="dense"
 						id="year"
-						label="Year"
+						label="Year (only digits)"
 						type="text"
 						fullWidth
+						onChange={e =>
+							setReleaseYear(e.target.value.replace(/[^0-9]/gim, ''))
+						}
 					/>
 					<TextField
 						margin="dense"
-						id="actor"
+						id="stars"
 						label="Actor"
 						type="text"
 						fullWidth
+						onChange={e => {
+							setEnterStars(
+								e.target.value.replace(
+									/[0-9.*+?!@#%_~+=&;'"./<>:`№/^${}()|[\]\\]/gim,
+									'',
+								),
+							);
+						}}
 					/>
 					<FormControl fullWidth>
 						<InputLabel htmlFor="format">Format</InputLabel>
@@ -87,9 +121,9 @@ const Add = () => {
 								id: 'format',
 							}}
 						>
-							<MenuItem value="dvd">DVD</MenuItem>
-							<MenuItem value="vhs">VHS</MenuItem>
-							<MenuItem value="bluRay">Blu-Ray</MenuItem>
+							<MenuItem value="DVD">DVD</MenuItem>
+							<MenuItem value="VHS">VHS</MenuItem>
+							<MenuItem value="Blu-Ray">Blu-Ray</MenuItem>
 						</Select>
 					</FormControl>
 				</DialogContent>
@@ -97,7 +131,7 @@ const Add = () => {
 					<Button onClick={handleClose} color="primary">
 						Cancel
 					</Button>
-					<Button onClick={handleClose} color="primary">
+					<Button onClick={handlAdd} color="primary">
 						Add
 					</Button>
 				</DialogActions>
@@ -106,4 +140,4 @@ const Add = () => {
 	);
 };
 
-export { Add };
+export { AddFilm };

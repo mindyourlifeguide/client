@@ -3,42 +3,38 @@ import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
 import './Search.scss';
 
-const Search = () => {
-	const [selectedValue, setSelectedValue] = React.useState('Film');
-	const [search, setSearch] = React.useState('');
-
-	const handleChange = event => {
-		setSelectedValue(console.log(event.target.value));
-	};
-
+const Search = ({ searchLine, setSearchLine, radio, setRadio }) => {
 	return (
+		// search fields with radio button "Film" or "Actor"
+		// searching logic in the /src/components/Films/FilmsList/
 		<div className="search">
 			<TextField
-				value={search}
-				id="outlined-search"
-				label="Search film"
-				type="search"
+				className="searchInput"
+				label="Search field"
 				variant="outlined"
 				size="small"
-				onChange={e => setSearch(console.log(e.target.value))}
+				value={searchLine}
+				onChange={e => {
+					setSearchLine(e.target.value);
+				}}
 			/>
+
 			<div>
 				<Radio
-					checked={selectedValue === 'Film'}
-					onChange={handleChange}
-					value="Film"
+					checked={radio === 'Film'}
 					color="primary"
-					name="radio-button-demo"
-					inputProps={{ 'aria-label': 'Film' }}
+					onChange={() => {
+						setRadio('Film');
+					}}
 				/>
 				<label>Film</label>
+
 				<Radio
-					checked={selectedValue === 'Actor'}
-					onChange={handleChange}
-					value="Actor"
+					checked={radio === 'Actor'}
+					onChange={() => {
+						setRadio('Actor');
+					}}
 					color="secondary"
-					name="radio-button-demo"
-					inputProps={{ 'aria-label': 'Actor' }}
 				/>
 				<label>Actor</label>
 			</div>
