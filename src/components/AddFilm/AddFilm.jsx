@@ -43,7 +43,7 @@ const AddFilm = ({ setFilms }) => {
 				title: title,
 				release_year: release_year,
 				format: format,
-				actors: enterStars.split(', ').filter((star, index) => {
+				stars: enterStars.split(', ').filter((star, index) => {
 					return index === enterStars.split(', ').indexOf(star);
 				}),
 			})
