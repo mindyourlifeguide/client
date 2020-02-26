@@ -22,8 +22,8 @@ const AddFilm = ({ setFilms }) => {
 	const [open, setOpen] = useState(false);
 	const [format, setFormat] = useState('DVD');
 	const [title, setTitle] = useState('');
-	const [release_year, setReleaseYear] = useState('');
-	const [enterStars, setEnterStars] = useState('');
+	const [releaseYear, setReleaseYear] = useState('');
+	const [stars, setStars] = useState('');
 
 	// the modal window adding film
 	const handleClickOpen = () => {
@@ -41,10 +41,10 @@ const AddFilm = ({ setFilms }) => {
 		axios
 			.post(`http://localhost:5000/api/films`, {
 				title: title,
-				release_year: release_year,
+				releaseYear: releaseYear,
 				format: format,
-				stars: enterStars.split(', ').filter((star, index) => {
-					return index === enterStars.split(', ').indexOf(star);
+				stars: stars.split(', ').filter((star, index) => {
+					return index === stars.split(', ').indexOf(star);
 				}),
 			})
 			.then(handleClose)
@@ -101,7 +101,7 @@ const AddFilm = ({ setFilms }) => {
 						type="text"
 						fullWidth
 						onChange={e => {
-							setEnterStars(
+							setStars(
 								e.target.value.replace(
 									/[0-9.*+?!@#%_~+=&;'"./<>:`№/^${}()|[\]\\]/gim,
 									'',

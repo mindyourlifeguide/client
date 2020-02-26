@@ -26,7 +26,6 @@ const App = () => {
 				console.log(err);
 			});
 	}, []);
-
 	// alphabetical sorting list
 	const sorting = () => {
 		setFilms(films.sort((a, b) => (a.title > b.title ? 1 : -1)));
@@ -36,7 +35,6 @@ const App = () => {
 	return (
 		<div>
 			<Title />
-
 			<div className="button">
 				<UploadFilmsList className="upload" />
 				<div className="add">

@@ -62,7 +62,7 @@ const FilmsList = ({
 									className="info"
 									id={film._id}
 									title={film.title}
-									year={film.release_year}
+									year={film.releaseYear}
 									format={film.format}
 									stars={film.stars}
 								/>

@@ -8,16 +8,19 @@ const Search = ({ searchLine, setSearchLine, radio, setRadio }) => {
 		// search fields with radio button "Film" or "Actor"
 		// searching logic in the /src/components/Films/FilmsList/
 		<div className="search">
-			<TextField
-				className="searchInput"
-				label="Search field"
-				variant="outlined"
-				size="small"
-				value={searchLine}
-				onChange={e => {
-					setSearchLine(e.target.value);
-				}}
-			/>
+			<form noValidate autoComplete="off">
+				<TextField
+					className="searchInput"
+					label="Search field"
+					type="search"
+					variant="outlined"
+					size="small"
+					value={searchLine}
+					onChange={e => {
+						setSearchLine(e.target.value);
+					}}
+				/>
+			</form>
 
 			<div>
 				<Radio

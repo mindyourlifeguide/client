@@ -18,7 +18,7 @@ const UploadFilmsList = () => {
 		axios
 			.post(`http://localhost:5000/api/films`, {
 				title: titles[i],
-				release_year: Number(releaseYears[i]),
+				releaseYear: Number(releaseYears[i]),
 				format: formats[i],
 				stars: stars[i].split(', ').filter((star, index) => {
 					return index === stars[i].split(', ').indexOf(star);
