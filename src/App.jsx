@@ -28,7 +28,7 @@ const App = () => {
 	}, []);
 	// alphabetical sorting list
 	const sorting = () => {
-		setFilms(films.sort((a, b) => (a.title > b.title ? 1 : -1)));
+		setFilms(films.sort((a, b) => a.title.localeCompare(b.title)));
 		setForceRerender(!forceRerender);
 	};
 

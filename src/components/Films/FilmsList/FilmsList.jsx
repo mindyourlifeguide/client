@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FilmList.scss';
 import { FilmsListItem } from '../FilmsListItem';
 import { IconButton } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const FilmsList = ({
 	films,
@@ -13,13 +19,26 @@ const FilmsList = ({
 	radio,
 	_id,
 }) => {
+	const [open, setOpen] = React.useState(false);
+	const [confirmDelete, setConfirmDelete] = useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+		setConfirmDelete(false);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+		setConfirmDelete(false);
+	};
+	const handleClickAgree = () => {
+		setConfirmDelete(true);
+	};
+
 	const searching = (searchLine, radio) => {
 		if (radio === 'Film') {
 			return film => {
-				return (
-					film.title.toLowerCase().includes(searchLine.toLowerCase()) ||
-					!searchLine
-				);
+				return film.title.toLowerCase().includes(searchLine.toLowerCase());
 			};
 		} else {
 			return film => {
@@ -46,17 +65,59 @@ const FilmsList = ({
 					return (
 						<li key={film._id}>
 							<div className="info">
-								<IconButton
-									style={{ padding: 0 }}
-									name="delete"
-									className="delete"
-									color="secondary"
-									aria-label="delete"
-									component="span"
-									onClick={() => handleDelete(film._id)}
-								>
-									<DeleteOutlineIcon />
-								</IconButton>
+								<div className="delete">
+									<IconButton
+										style={{ padding: 0 }}
+										name="delete"
+										className="delete"
+										color="secondary"
+										aria-label="delete"
+										component="span"
+										onClick={() => handleDelete(film._id)}
+									>
+										<DeleteOutlineIcon />
+									</IconButton>
+								</div>
+
+								<div>
+									<Button
+										variant="outlined"
+										color="primary"
+										onClick={handleClickOpen}
+									>
+										Open alert dialog
+									</Button>
+									<Dialog
+										style={{ opacity: 0.5 }}
+										open={open}
+										onClose={handleClose}
+										aria-labelledby="alert-dialog-title"
+										aria-describedby="alert-dialog-description"
+									>
+										<DialogTitle id="alert-dialog-title">
+											{"Use Google's location service?"}
+										</DialogTitle>
+										<DialogContent>
+											<DialogContentText id="alert-dialog-description">
+												Let Google help apps determine location. This means
+												sending anonymous location data to Google, even when no
+												apps are running.
+											</DialogContentText>
+										</DialogContent>
+										<DialogActions>
+											<Button onClick={handleClose} color="primary">
+												Disagree
+											</Button>
+											<Button
+												onClick={handleClickAgree}
+												color="primary"
+												autoFocus
+											>
+												Agree
+											</Button>
+										</DialogActions>
+									</Dialog>
+								</div>
 
 								<FilmsListItem
 									className="info"
@@ -70,6 +131,13 @@ const FilmsList = ({
 						</li>
 					);
 				})}
+				{films.filter(searching(searchLine, radio)).length === 0 && (
+					<p>
+						Sorry. The file you are looking for is not in our database. You can
+						write to us to fix this or add a file manually using the "Add"
+						button
+					</p>
+				)}
 			</ul>
 		</div>
 	);
