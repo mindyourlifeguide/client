@@ -20,21 +20,23 @@ const FilmsList = ({
 	_id,
 }) => {
 	const [open, setOpen] = React.useState(false);
-	const [confirmDelete, setConfirmDelete] = useState(false);
+	const [clickedFilmID, setClickedFilmID] = useState('');
 
 	const handleClickOpen = () => {
 		setOpen(true);
-		setConfirmDelete(false);
 	};
-
 	const handleClose = () => {
 		setOpen(false);
-		setConfirmDelete(false);
 	};
-	const handleClickAgree = () => {
-		setConfirmDelete(true);
+	const handleDelete = () => {
+		films.splice(
+			films.findIndex(film => film._id === clickedFilmID),
+			1,
+		);
+		axios.delete(`http://localhost:5000/api/films/${clickedFilmID}`);
+		setForceRerender(!forceRerender);
+		setOpen(false);
 	};
-
 	const searching = (searchLine, radio) => {
 		if (radio === 'Film') {
 			return film => {
@@ -49,15 +51,6 @@ const FilmsList = ({
 		}
 	};
 
-	const handleDelete = id => {
-		films.splice(
-			films.findIndex(film => film._id === id),
-			1,
-		);
-		axios.delete(`http://localhost:5000/api/films/${id}`);
-		setForceRerender(!forceRerender);
-	};
-
 	return (
 		<div className="lists">
 			<ul>
@@ -65,7 +58,9 @@ const FilmsList = ({
 					return (
 						<li key={film._id}>
 							<div className="info">
-								<div className="delete">
+								<div className="delete"></div>
+
+								<div>
 									<IconButton
 										style={{ padding: 0 }}
 										name="delete"
@@ -73,20 +68,10 @@ const FilmsList = ({
 										color="secondary"
 										aria-label="delete"
 										component="span"
-										onClick={() => handleDelete(film._id)}
+										onClick={() => handleClickOpen(setClickedFilmID(film._id))}
 									>
 										<DeleteOutlineIcon />
 									</IconButton>
-								</div>
-
-								<div>
-									<Button
-										variant="outlined"
-										color="primary"
-										onClick={handleClickOpen}
-									>
-										Open alert dialog
-									</Button>
 									<Dialog
 										style={{ opacity: 0.5 }}
 										open={open}
@@ -94,26 +79,31 @@ const FilmsList = ({
 										aria-labelledby="alert-dialog-title"
 										aria-describedby="alert-dialog-description"
 									>
-										<DialogTitle id="alert-dialog-title">
-											{"Use Google's location service?"}
+										<DialogTitle
+											id="alert-dialog-title"
+											style={{ color: 'red' }}
+										>
+											{'DANGEROUS ZONE'}
 										</DialogTitle>
 										<DialogContent>
-											<DialogContentText id="alert-dialog-description">
-												Let Google help apps determine location. This means
-												sending anonymous location data to Google, even when no
-												apps are running.
+											<DialogContentText
+												id="alert-dialog-description"
+												style={{ color: 'black' }}
+											>
+												This action permanently removes the movie from the
+												database. Are you sure you want to delete the movie?
 											</DialogContentText>
 										</DialogContent>
 										<DialogActions>
 											<Button onClick={handleClose} color="primary">
-												Disagree
+												Cancel
 											</Button>
 											<Button
-												onClick={handleClickAgree}
-												color="primary"
+												onClick={handleDelete}
+												color="secondary"
 												autoFocus
 											>
-												Agree
+												Сonfirm deletion
 											</Button>
 										</DialogActions>
 									</Dialog>
@@ -133,9 +123,10 @@ const FilmsList = ({
 				})}
 				{films.filter(searching(searchLine, radio)).length === 0 && (
 					<p>
-						Sorry. The file you are looking for is not in our database. You can
-						write to us to fix this or add a file manually using the "Add"
-						button
+						<b>Sorry.</b> The file you are looking for isn&rsquo;t in our
+						database. You can write to us to fix this or add a file manually
+						using the
+						<b>"Add"</b> button
 					</p>
 				)}
 			</ul>

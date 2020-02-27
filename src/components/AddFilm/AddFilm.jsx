@@ -38,12 +38,12 @@ const AddFilm = ({ setFilms, films }) => {
 		}
 	};
 
-	const compareArray = film => {
+	const repeatProperties = film => {
 		return (
 			stars
-				.split(', ')
+				.split((', ' && ',') || ' ,')
 				.filter((star, index) => {
-					return index === stars.split(', ').indexOf(star);
+					return index === stars.split((', ' && ',') || ' ,').indexOf(star);
 				})
 				.sort()
 				.join(', ') !== film.stars.sort().join(', ')
@@ -58,7 +58,7 @@ const AddFilm = ({ setFilms, films }) => {
 					film.title !== title ||
 					Number(film.releaseYear) !== Number(releaseYear) ||
 					film.format !== format ||
-					compareArray(film),
+					repeatProperties(film),
 			).length === films.length
 		) {
 			setRepeat(false);
