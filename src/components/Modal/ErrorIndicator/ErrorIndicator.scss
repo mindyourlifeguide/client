@@ -1,0 +1,141 @@
+.error-indicator {
+	display: flex;
+	justify-content: center;
+}
+.text {
+	color: #17a2b8;
+}
+.spinner {
+	display: flex;
+	justify-content: center;
+	width: 51.2px;
+	height: 51.2px;
+	position: relative;
+	top: 50%;
+	margin-top: 25px;
+	line-height: 100%;
+
+	.spinner-circle {
+		position: absolute;
+		background-color: transparent;
+		border-radius: 50%;
+		border-style: solid;
+		border-color: #282c34 transparent #282c34 transparent;
+
+		&.spinner-circle-outer {
+			width: 51.2px;
+			height: 51.2px;
+			border-width: 12.8px;
+			top: -6.400000000000002px;
+			left: -6.400000000000002px;
+			opacity: 0.2;
+			filter: alpha(opacity = 50);
+			animation: spinner-rotate-outer 2s 0s ease-in-out infinite;
+		}
+
+		&.spinner-circle-single-1 {
+			width: 38.4px;
+			height: 38.4px;
+			border-width: 9.6px;
+			top: 3.200000000000001px;
+			left: 3.200000000000001px;
+			opacity: 0.9;
+			filter: alpha(opacity = 30);
+			animation: spinner-rotate-single-1 5s 0s ease-in-out infinite;
+			border-color: transparent transparent transparent #17a2b8;
+			box-shadow: 2px 0 2px #17a2b8;
+		}
+
+		&.spinner-circle-single-2 {
+			width: 0;
+			height: 0;
+			border-width: 25.6px;
+			top: 6.399999999999999px;
+			left: 6.399999999999999px;
+			opacity: 0;
+			filter: alpha(opacity = 30);
+			animation: spinner-rotate-single-2 7s 0s ease-in-out infinite;
+			border-color: #17a2b8 transparent transparent transparent;
+			box-shadow: 0 -12px 4px #17a2b8;
+		}
+	}
+}
+@keyframes spinner-rotate-outer {
+	0% {
+		transform: rotateZ(0deg);
+	}
+
+	100% {
+		transform: rotateZ(360deg);
+	}
+}
+@keyframes spinner-rotate-single-1 {
+	0% {
+		transform: rotateZ(56deg);
+	}
+
+	20% {
+		transform: rotateZ(-132deg);
+	}
+
+	40% {
+		transform: rotateZ(-250deg);
+	}
+
+	60% {
+		transform: rotateZ(40deg);
+	}
+
+	70% {
+		transform: rotateZ(-80deg);
+	}
+
+	100% {
+		transform: rotateZ(56deg);
+	}
+}
+@keyframes spinner-rotate-single-2 {
+	0% {
+		transform: rotateZ(-24deg);
+	}
+
+	10% {
+		transform: rotateZ(142deg);
+	}
+
+	20% {
+		transform: rotateZ(-87deg);
+	}
+
+	30% {
+		transform: rotateZ(-345deg);
+	}
+
+	40% {
+		transform: rotateZ(86deg);
+	}
+
+	50% {
+		transform: rotateZ(175deg);
+	}
+
+	60% {
+		transform: rotateZ(-245deg);
+	}
+
+	70% {
+		transform: rotateZ(4deg);
+	}
+
+	80% {
+		transform: rotateZ(-132deg);
+	}
+
+	90% {
+		transform: rotateZ(345deg);
+	}
+
+	100% {
+		transform: rotateZ(-24deg);
+	}
+}

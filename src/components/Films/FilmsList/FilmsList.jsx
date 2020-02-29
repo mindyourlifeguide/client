@@ -10,6 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Typography from '@material-ui/core/Typography';
 
 const FilmsList = ({
 	films,
@@ -21,6 +22,15 @@ const FilmsList = ({
 }) => {
 	const [open, setOpen] = React.useState(false);
 	const [clickedFilmID, setClickedFilmID] = useState('');
+	const [errorAdd, setErrorAdd] = useState(false);
+
+	// the modal window error adding film
+	const handleOpenErrorAdd = () => {
+		setErrorAdd(true);
+	};
+	const handleCloseErrorAdd = () => {
+		setErrorAdd(false);
+	};
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -29,13 +39,21 @@ const FilmsList = ({
 		setOpen(false);
 	};
 	const handleDelete = () => {
-		films.splice(
-			films.findIndex(film => film._id === clickedFilmID),
-			1,
-		);
-		axios.delete(`http://localhost:5000/api/films/${clickedFilmID}`);
-		setForceRerender(!forceRerender);
-		setOpen(false);
+		axios
+			.delete(`http://localhost:5000/api/films/${clickedFilmID}`)
+			.then(() => {
+				films.splice(
+					films.findIndex(film => film._id === clickedFilmID),
+					1,
+				);
+			})
+			.then(setForceRerender(!forceRerender))
+			.then(handleClose)
+			.catch(err => {
+				handleClose();
+				handleOpenErrorAdd();
+				console.log(err);
+			});
 	};
 	const searching = (searchLine, radio) => {
 		if (radio === 'Film') {
@@ -53,14 +71,35 @@ const FilmsList = ({
 
 	return (
 		<div className="lists">
+			{errorAdd && (
+				<div>
+					<Dialog
+						onClose={handleCloseErrorAdd}
+						aria-labelledby="customized-dialog-title"
+						open={errorAdd}
+					>
+						<DialogTitle
+							onClose={handleCloseErrorAdd}
+							id="customized-dialog-title"
+							style={{ color: 'red' }}
+						>
+							Error
+						</DialogTitle>
+						<DialogContent dividers>
+							<Typography gutterBottom>
+								Oops, something went wrong. Please, try again later.
+							</Typography>
+						</DialogContent>
+						<DialogActions />
+					</Dialog>
+				</div>
+			)}
 			<ul>
 				{films.filter(searching(searchLine, radio)).map(film => {
 					return (
 						<li key={film._id}>
 							<div className="info">
-								<div className="delete"></div>
-
-								<div>
+								<div className="delete">
 									<IconButton
 										style={{ padding: 0 }}
 										name="delete"
@@ -73,7 +112,6 @@ const FilmsList = ({
 										<DeleteOutlineIcon />
 									</IconButton>
 									<Dialog
-										style={{ opacity: 0.5 }}
 										open={open}
 										onClose={handleClose}
 										aria-labelledby="alert-dialog-title"
@@ -83,7 +121,7 @@ const FilmsList = ({
 											id="alert-dialog-title"
 											style={{ color: 'red' }}
 										>
-											{'DANGEROUS ZONE'}
+											DANGEROUS ZONE
 										</DialogTitle>
 										<DialogContent>
 											<DialogContentText
@@ -124,9 +162,11 @@ const FilmsList = ({
 				{films.filter(searching(searchLine, radio)).length === 0 && (
 					<p>
 						<b>Sorry.</b> The file you are looking for isn&rsquo;t in our
-						database. You can write to us to fix this or add a file manually
-						using the
-						<b>"Add"</b> button
+						database.
+						<p>
+							You can write to us to fix this or add a file manually using the{' '}
+							<b>"ADD"</b> button.
+						</p>
 					</p>
 				)}
 			</ul>
